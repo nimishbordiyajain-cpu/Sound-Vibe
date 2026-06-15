@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-spotify-base text-spotify-white font-sans antialiased;
+    background-color: #050505; /* Deep rich black */
+  }
+
+  /* Premium Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    border: 2px solid #050505;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
+  }
+}
+
+@layer utilities {
+  .text-glow {
+    text-shadow: 0 0 10px rgba(255,255,255,0.5), 0 0 20px rgba(255,255,255,0.3);
+  }
+  
+  .text-glow-purple {
+    text-shadow: 0 0 10px rgba(168,85,247,0.8), 0 0 20px rgba(168,85,247,0.4);
+  }
+
+  .glass-panel {
+    @apply bg-white/[0.03] backdrop-blur-xl border border-white/[0.05];
+  }
+  
+  .glass-panel-hover {
+    @apply hover:bg-white/[0.08] hover:border-white/[0.1] transition-all duration-300;
+  }
+}
+
+/* Ambient Background Animations */
+@keyframes ambient-drift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-ambient {
+  background-size: 200% 200%;
+  animation: ambient-drift 15s ease infinite;
+}

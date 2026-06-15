@@ -1,0 +1,82 @@
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Music, ArrowLeft, Loader2, CheckCircle2 } from 'lucide-react';
+import toast from 'react-hot-toast';
+
+const ForgotPassword = () => {
+  const [email, setEmail] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSent, setIsSent] = useState(false);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!email) {
+      toast.error('Please enter your email');
+      return;
+    }
+
+    setIsSubmitting(true);
+    
+    // Simulate API call
+    setTimeout(() => {
+      setIsSent(true);
+      toast.success('Password reset link sent!');
+      setIsSubmitting(false);
+    }, 1500);
+  };
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-t from-spotify-base via-[#1a1a1a] to-spotify-base p-4">
+      <div className="w-full max-w-md bg-spotify-elevated p-8 rounded-2xl shadow-2xl border border-white/5">
+        <div className="flex flex-col items-center mb-8 text-center">
+          <div className="w-16 h-16 bg-spotify-green rounded-full flex items-center justify-center mb-4 shadow-[0_0_20px_rgba(30,215,96,0.3)]">
+            <Music className="w-8 h-8 text-black" />
+          </div>
+          <h2 className="text-3xl font-bold text-white mb-2">Reset Password</h2>
+          <p className="text-sm text-gray-400">Enter your email and we'll send you a link to reset your password.</p>
+        </div>
+
+        {isSent ? (
+          <div className="flex flex-col items-center space-y-4 py-4">
+            <CheckCircle2 className="w-16 h-16 text-spotify-green" />
+            <p className="text-white text-center">Check your inbox for the reset link!</p>
+            <Link to="/login" className="mt-4 py-3 px-6 bg-transparent border border-gray-500 hover:border-white text-white font-bold rounded-full transition-all">
+              Back to Login
+            </Link>
+          </div>
+        ) : (
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div>
+              <label className="block text-sm font-medium text-gray-400 mb-2">Email address</label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full px-4 py-3 bg-spotify-base border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-spotify-green focus:ring-1 focus:ring-spotify-green transition-colors"
+                placeholder="name@example.com"
+              />
+            </div>
+
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="w-full py-3 px-4 bg-spotify-green hover:bg-spotify-greenHover text-black font-bold rounded-full transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center space-x-2 disabled:opacity-70 disabled:cursor-not-allowed"
+            >
+              {isSubmitting ? <Loader2 className="w-5 h-5 animate-spin" /> : <span>Send Reset Link</span>}
+            </button>
+          </form>
+        )}
+
+        {!isSent && (
+          <p className="mt-8 text-center text-sm text-gray-400">
+            <Link to="/login" className="flex items-center justify-center text-white hover:text-spotify-green transition-colors">
+              <ArrowLeft className="w-4 h-4 mr-2" /> Back to log in
+            </Link>
+          </p>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default ForgotPassword;
