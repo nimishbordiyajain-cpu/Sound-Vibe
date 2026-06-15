@@ -68,7 +68,8 @@ The system is built as a Single Page Application (SPA) using **React.js** and **
 
 # 2.10 Screenshots
 *(Note: Replace these placeholders with actual screenshots of the application before submission)*
-- `[Screenshot of Dashboard and Greeting]`
+- <img width="1470" height="810" alt="image" src="https://github.com/user-attachments/assets/b53fdfe7-bc08-4262-9417-9e657daeb9df" />
+
 - `[Screenshot of Floating Audio Player in Action]`
 - `[Screenshot of Search Functionality]`
 - `[Screenshot of Playlist Management]`
