@@ -67,12 +67,11 @@ The system is built as a Single Page Application (SPA) using **React.js** and **
   - **Output:** The track object is appended to the `likedSongs` array context, the icon turns green, and it appears in the Liked Songs view.
 
 # 2.10 Screenshots
-*(Note: Replace these placeholders with actual screenshots of the application before submission)*
 - <img width="1470" height="810" alt="image" src="https://github.com/user-attachments/assets/b53fdfe7-bc08-4262-9417-9e657daeb9df" />
 
-- `[Screenshot of Floating Audio Player in Action]`
-- `[Screenshot of Search Functionality]`
-- `[Screenshot of Playlist Management]`
+- <img width="1470" height="812" alt="image" src="https://github.com/user-attachments/assets/e0c501b3-1ee4-4594-880d-916d17a5d0c8" />
+
+- <img width="1470" height="811" alt="image" src="https://github.com/user-attachments/assets/d9129ce1-5784-40e5-868c-3c81da519f1b" />
 
 # 2.11 Results and Observations
 - **Performance:** The decoupling of the `PlayerContext` successfully resulted in uninterrupted music playback even during intense React Router DOM view switching.
