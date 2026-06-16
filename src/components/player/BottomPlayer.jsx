@@ -3,7 +3,7 @@ import { Play, Pause, SkipBack, SkipForward, Volume2, Shuffle, Repeat, ListMusic
 import { usePlayer } from '../../context/PlayerContext';
 
 const BottomPlayer = () => {
-  const { currentTrack, isPlaying, togglePlay, handleNext, handlePrevious, volume, setVolume, isQueueOpen, toggleQueue, isShuffle, isRepeat, toggleShuffle, toggleRepeat } = usePlayer();
+  const { currentTrack, isPlaying, togglePlay, handleNext, handlePrevious, volume, setVolume, isQueueOpen, toggleQueue, isShuffle, isRepeat, toggleShuffle, toggleRepeat, playbackRate, setPlaybackRate } = usePlayer();
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const audioRef = useRef(null);
@@ -20,6 +20,12 @@ const BottomPlayer = () => {
       audioRef.current.volume = volume;
     }
   }, [volume]);
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.playbackRate = playbackRate;
+    }
+  }, [playbackRate, currentTrack]);
 
   useEffect(() => {
     if (audioRef.current) {
@@ -120,6 +126,13 @@ const BottomPlayer = () => {
     }
   };
 
+  const handleSpeedToggle = () => {
+    const speeds = [0.5, 0.75, 1, 1.25, 1.5, 2];
+    const currentIndex = speeds.indexOf(playbackRate);
+    const nextIndex = (currentIndex + 1) % speeds.length;
+    setPlaybackRate(speeds[nextIndex]);
+  };
+
   return (
     <div className="h-20 glass-panel rounded-2xl px-6 flex items-center justify-between shadow-[0_20px_50px_rgba(0,0,0,0.5)] border-white/10 hover:border-white/20 transition-colors">
       <audio 
@@ -206,6 +219,13 @@ const BottomPlayer = () => {
 
       {/* Extra Controls */}
       <div className="flex items-center justify-end w-1/3 space-x-4 pr-2">
+        <button 
+          onClick={handleSpeedToggle}
+          className={`transition-colors text-[10px] font-black px-2 py-0.5 rounded border ${playbackRate !== 1 ? 'text-spotify-green border-spotify-green drop-shadow-[0_0_5px_rgba(30,215,96,0.5)]' : 'text-gray-400 border-gray-600 hover:text-white hover:border-gray-400'}`}
+          title="Playback Speed (DJ Mode)"
+        >
+          {playbackRate}x
+        </button>
         <button 
           onClick={toggleQueue} 
           className={`transition-colors ${isQueueOpen ? 'text-spotify-green hover:text-green-400' : 'text-gray-400 hover:text-white'}`}

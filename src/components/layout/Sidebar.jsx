@@ -3,6 +3,7 @@ import { Home, Search, Library, PlusSquare, Heart, Crown, LogOut, Headphones } f
 import { useAuth } from '../../context/AuthContext';
 import { usePlayer } from '../../context/PlayerContext';
 import { motion } from 'framer-motion';
+import FocusTimer from './FocusTimer';
 
 const Sidebar = () => {
   const { pathname } = useLocation();
@@ -84,8 +85,11 @@ const Sidebar = () => {
         ))}
       </nav>
 
+      {/* Focus Timer Widget */}
+      <FocusTimer />
+
       {/* User Section */}
-      <div className="p-4 border-t border-white/10">
+      <div className="p-4 border-t border-white/10 mt-4">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center space-x-3">
             <div className="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center font-bold text-white">
