@@ -4,6 +4,7 @@ import { usePlayer } from '../../context/PlayerContext';
 import toast from 'react-hot-toast';
 
 const FocusTimer = () => {
+  const [durationMins, setDurationMins] = useState(25);
   const [timeLeft, setTimeLeft] = useState(25 * 60);
   const [isActive, setIsActive] = useState(false);
   const { isPlaying, togglePlay } = usePlayer();
@@ -28,13 +29,19 @@ const FocusTimer = () => {
   }, [isActive, timeLeft, isPlaying, togglePlay]);
 
   const toggleTimer = () => {
-    if (timeLeft === 0) setTimeLeft(25 * 60);
+    if (timeLeft === 0) setTimeLeft(durationMins * 60);
     setIsActive(!isActive);
   };
 
   const resetTimer = () => {
     setIsActive(false);
-    setTimeLeft(25 * 60);
+    setTimeLeft(durationMins * 60);
+  };
+
+  const changeDuration = (mins) => {
+    setDurationMins(mins);
+    setTimeLeft(mins * 60);
+    setIsActive(false);
   };
 
   const formatTime = (seconds) => {
@@ -48,6 +55,18 @@ const FocusTimer = () => {
       <div className="flex items-center space-x-2 text-gray-400 mb-3">
         <Timer className="w-4 h-4" />
         <span className="text-xs font-bold uppercase tracking-wider">Focus Mode</span>
+      </div>
+
+      <div className="flex justify-between items-center mb-3">
+        {[15, 25, 45, 60].map(mins => (
+          <button 
+            key={mins}
+            onClick={() => changeDuration(mins)}
+            className={`text-[10px] font-bold px-2.5 py-1 rounded-full transition-all ${durationMins === mins ? 'bg-purple-500 text-white shadow-[0_0_10px_rgba(168,85,247,0.6)]' : 'bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white'}`}
+          >
+            {mins}m
+          </button>
+        ))}
       </div>
       
       <div className="flex items-center justify-between">
@@ -75,8 +94,8 @@ const FocusTimer = () => {
       
       <div className="mt-3 h-1 w-full bg-gray-800 rounded-full overflow-hidden">
         <div 
-          className="h-full bg-gradient-to-r from-indigo-500 to-purple-500 transition-all duration-1000 ease-linear"
-          style={{ width: `${((25 * 60 - timeLeft) / (25 * 60)) * 100}%` }}
+          className="h-full bg-gradient-to-r from-indigo-500 to-purple-500 transition-all duration-1000 ease-linear shadow-[0_0_10px_rgba(168,85,247,0.5)]"
+          style={{ width: `${((durationMins * 60 - timeLeft) / (durationMins * 60)) * 100}%` }}
         />
       </div>
     </div>
