@@ -1,8 +1,12 @@
 import { createContext, useState, useContext } from 'react';
+import { useAuth } from './AuthContext';
+import { songs } from '../utils/dummyData';
+import toast from 'react-hot-toast';
 
 const PlayerContext = createContext();
 
 export const PlayerProvider = ({ children }) => {
+  const { user } = useAuth();
   const [currentTrack, setCurrentTrack] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [queue, setQueue] = useState([]);
@@ -67,7 +71,23 @@ export const PlayerProvider = ({ children }) => {
       setQueue(queue.slice(1));
       setIsPlaying(true);
     } else {
-      setIsPlaying(false);
+      if (user?.isPremium) {
+        // Autoplay random song for premium users
+        const randomIndex = Math.floor(Math.random() * songs.length);
+        setCurrentTrack(songs[randomIndex]);
+        setIsPlaying(true);
+        toast.success("Autoplay: Playing similar tracks", {
+          icon: '🎧',
+          style: {
+            borderRadius: '10px',
+            background: '#1ed760',
+            color: '#000',
+            fontWeight: 'bold',
+          },
+        });
+      } else {
+        setIsPlaying(false);
+      }
     }
   };
 
