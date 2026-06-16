@@ -200,19 +200,20 @@ const BottomPlayer = () => {
         </button>
         <div className="flex items-center space-x-2">
           <Volume2 className="w-5 h-5 text-gray-400" />
-        <div 
-          ref={volumeRef}
-          className="w-24 h-1 bg-gray-600 rounded-full group cursor-pointer relative py-2 -my-2 flex items-center"
-          onPointerDown={handleVolumePointerDown}
-          onPointerMove={handleVolumePointerMove}
-          onPointerUp={handleVolumePointerUp}
-          onPointerCancel={handleVolumePointerUp}
-        >
-          <div className="w-full h-1 bg-gray-600 rounded-full relative">
-            <div 
-              className="h-full bg-white group-hover:bg-spotify-green rounded-full pointer-events-none" 
-              style={{ width: `${volume * 100}%` }}
-            />
+          <div 
+            ref={volumeRef}
+            className="w-24 h-1 bg-gray-600 rounded-full group cursor-pointer relative py-2 -my-2 flex items-center"
+            onPointerDown={handleVolumePointerDown}
+            onPointerMove={handleVolumePointerMove}
+            onPointerUp={handleVolumePointerUp}
+            onPointerCancel={handleVolumePointerUp}
+          >
+            <div className="w-full h-1 bg-gray-600 rounded-full relative">
+              <div 
+                className="h-full bg-white group-hover:bg-spotify-green rounded-full pointer-events-none" 
+                style={{ width: `${volume * 100}%` }}
+              />
+            </div>
           </div>
         </div>
       </div>
