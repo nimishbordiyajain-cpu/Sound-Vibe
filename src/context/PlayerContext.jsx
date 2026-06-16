@@ -84,6 +84,15 @@ export const PlayerProvider = ({ children }) => {
     setQueue(shuffled);
   };
 
+  const reorderQueue = (startIndex, endIndex) => {
+    setQueue((prevQueue) => {
+      const result = Array.from(prevQueue);
+      const [removed] = result.splice(startIndex, 1);
+      result.splice(endIndex, 0, removed);
+      return result;
+    });
+  };
+
   const createPlaylist = (name, tracks = []) => {
     setPlaylists([...playlists, { id: Date.now(), name, tracks }]);
   };
@@ -91,7 +100,7 @@ export const PlayerProvider = ({ children }) => {
   return (
     <PlayerContext.Provider value={{
       currentTrack, isPlaying, queue, duration, volume, playlists, likedSongs, isQueueOpen, isShuffle, isRepeat, playbackRate,
-      playTrack, togglePlay, handleNext, handlePrevious, addToQueue, shuffleQueue,
+      playTrack, togglePlay, handleNext, handlePrevious, addToQueue, shuffleQueue, reorderQueue,
       setVolume, createPlaylist, toggleLike, addTrackToPlaylist, toggleQueue, toggleShuffle, toggleRepeat, setPlaybackRate
     }}>
       {children}
