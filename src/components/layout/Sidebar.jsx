@@ -29,10 +29,10 @@ const Sidebar = () => {
       
       <div className="p-6 pb-2 relative z-10">
         <Link to="/dashboard" className="text-2xl font-bold text-white tracking-tight flex items-center space-x-2 group">
-          <div className="w-8 h-8 bg-gradient-to-br from-spotify-green to-indigo-600 rounded-lg flex items-center justify-center group-hover:rotate-12 transition-transform">
-            <Headphones className="w-5 h-5 text-white" />
+          <div className="w-8 h-8 rounded-lg flex items-center justify-center overflow-hidden shadow-[0_0_15px_rgba(168,85,247,0.5)] group-hover:scale-110 transition-transform">
+            <img src="/logo.png" alt="Sound-Vibe Logo" className="w-full h-full object-cover" />
           </div>
-          <span>AudioX</span>
+          <span>Sound-Vibe</span>
         </Link>
       </div>
 

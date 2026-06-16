@@ -31,7 +31,7 @@ const LikedSongs = () => {
             <h1 className="text-5xl md:text-8xl font-black text-white tracking-tighter mb-6">Liked Songs</h1>
             <div className="flex items-center text-sm text-gray-300 font-medium">
               <div className="w-6 h-6 bg-spotify-green rounded-full flex items-center justify-center text-white font-bold mr-2 text-xs">AX</div>
-              <span className="font-bold text-white mr-2 hover:underline cursor-pointer">AudioX User</span>
+              <span className="font-bold text-white mr-2 hover:underline cursor-pointer">Sound-Vibe User</span>
               <span>• {likedSongs?.length || 0} songs</span>
             </div>
           </motion.div>

@@ -1,12 +1,59 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { Check, ShieldCheck } from 'lucide-react';
-import PaymentModal from '../components/premium/PaymentModal';
+import toast from 'react-hot-toast';
 
 const Premium = () => {
   const [isYearly, setIsYearly] = useState(false);
-  const [selectedPlan, setSelectedPlan] = useState(null);
-  const { user } = useAuth();
+  const { user, upgradeToPremium } = useAuth();
+  const navigate = useNavigate();
+
+  const loadRazorpayScript = () => {
+    return new Promise((resolve) => {
+      const script = document.createElement('script');
+      script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+      script.onload = () => resolve(true);
+      script.onerror = () => resolve(false);
+      document.body.appendChild(script);
+    });
+  };
+
+  const handlePayment = async (plan) => {
+    if (plan.price === 0) return;
+
+    const res = await loadRazorpayScript();
+
+    if (!res) {
+      toast.error('Razorpay SDK failed to load. Are you online?');
+      return;
+    }
+
+    const options = {
+      key: 'rzp_test_Snvr3OyMCtKko3',
+      amount: plan.price * 100, // Amount is in currency subunits (paise)
+      currency: 'INR',
+      name: 'Sound-Vibe Premium',
+      description: `Upgrade to ${plan.name} Plan`,
+      image: window.location.origin + '/logo.png',
+      handler: function (response) {
+        upgradeToPremium();
+        toast.success('Payment Successful!');
+        navigate('/receipt', { state: { plan, method: 'razorpay', date: new Date().toISOString(), paymentId: response.razorpay_payment_id } });
+      },
+      prefill: {
+        name: user?.name || 'Guest User',
+        email: 'user@sound-vibe.com',
+        contact: '9999999999'
+      },
+      theme: {
+        color: '#8B5CF6' // Purple theme matching our app
+      }
+    };
+
+    const paymentObject = new window.Razorpay(options);
+    paymentObject.open();
+  };
 
   const plans = [
     {
@@ -72,7 +119,7 @@ const Premium = () => {
 
               <button 
                 disabled={plan.isCurrent}
-                onClick={() => setSelectedPlan(plan)}
+                onClick={() => handlePayment(plan)}
                 className={`w-full py-3 rounded-full font-bold mb-8 transition-colors ${
                   plan.isCurrent 
                     ? 'bg-white/10 text-white cursor-not-allowed' 
@@ -99,7 +146,7 @@ const Premium = () => {
         <div className="mt-16 bg-[#1a1a1a] rounded-xl p-8 flex flex-col md:flex-row items-center justify-between border border-white/5">
           <div className="mb-4 md:mb-0">
             <h4 className="text-xl font-bold mb-2 flex items-center"><ShieldCheck className="w-6 h-6 mr-2 text-spotify-green" /> Secure Payment</h4>
-            <p className="text-sm text-gray-400">Your transactions are encrypted and simulated securely via Razorpay UI.</p>
+            <p className="text-sm text-gray-400">Your transactions are encrypted and processed securely via Sound-Vibe Checkout.</p>
           </div>
           <div className="flex space-x-4 grayscale opacity-70">
             {/* Payment method icons placeholders */}
@@ -109,12 +156,6 @@ const Premium = () => {
           </div>
         </div>
       </div>
-
-      <PaymentModal 
-        isOpen={selectedPlan !== null} 
-        onClose={() => setSelectedPlan(null)} 
-        plan={selectedPlan || {}}
-      />
     </div>
   );
 };

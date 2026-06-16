@@ -20,7 +20,7 @@ const Landing = () => {
             <div className="w-12 h-12 bg-gradient-to-br from-spotify-green to-indigo-600 rounded-xl flex items-center justify-center shadow-[0_0_20px_rgba(139,92,246,0.4)] group-hover:shadow-[0_0_30px_rgba(139,92,246,0.6)] transition-all transform group-hover:rotate-6">
               <Headphones className="w-6 h-6 text-white" />
             </div>
-            <span className="text-3xl font-black text-white tracking-tighter bg-clip-text bg-gradient-to-r from-white to-gray-400">AudioX</span>
+            <span className="text-3xl font-black text-white tracking-tighter bg-clip-text bg-gradient-to-r from-white to-gray-400">Sound-Vibe</span>
           </motion.div>
           <motion.div 
             initial={{ opacity: 0, x: 20 }}
@@ -55,7 +55,7 @@ const Landing = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
             <Link to="/register" className="bg-spotify-green text-white px-10 py-5 rounded-full font-extrabold text-lg hover:scale-105 transition-transform shadow-[0_0_40px_rgba(139,92,246,0.5)] flex items-center justify-center">
-              Get AudioX Free <ChevronRight className="w-6 h-6 ml-2" />
+              Get Sound-Vibe Free <ChevronRight className="w-6 h-6 ml-2" />
             </Link>
             <Link to="/premium" className="bg-[#242424] text-white border border-white/10 px-10 py-5 rounded-full font-bold text-lg hover:bg-white/10 transition-colors flex items-center justify-center">
               View Premium Plans
@@ -114,7 +114,7 @@ const Landing = () => {
       <div className="py-32 bg-[#0a0a0a] border-t border-white/5 relative z-10">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-20">
-            <h2 className="text-5xl font-black text-white mb-6">Why AudioX?</h2>
+            <h2 className="text-5xl font-black text-white mb-6">Why Sound-Vibe?</h2>
             <p className="text-xl text-gray-400 max-w-2xl mx-auto">The best music experience built with cutting-edge technology for an unmatched auditory journey.</p>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
