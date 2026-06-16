@@ -10,6 +10,9 @@ export const PlayerProvider = ({ children }) => {
   const [volume, setVolume] = useState(0.8);
   const [playlists, setPlaylists] = useState([]);
   const [likedSongs, setLikedSongs] = useState([]);
+  const [isQueueOpen, setIsQueueOpen] = useState(true);
+
+  const toggleQueue = () => setIsQueueOpen(!isQueueOpen);
 
   const toggleLike = (track) => {
     setLikedSongs((prev) => {
@@ -76,9 +79,9 @@ export const PlayerProvider = ({ children }) => {
 
   return (
     <PlayerContext.Provider value={{
-      currentTrack, isPlaying, queue, duration, volume, playlists, likedSongs,
+      currentTrack, isPlaying, queue, duration, volume, playlists, likedSongs, isQueueOpen,
       playTrack, togglePlay, handleNext, handlePrevious, addToQueue, shuffleQueue,
-      setVolume, createPlaylist, toggleLike, addTrackToPlaylist
+      setVolume, createPlaylist, toggleLike, addTrackToPlaylist, toggleQueue
     }}>
       {children}
     </PlayerContext.Provider>

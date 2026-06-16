@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
-import { Play, Pause, SkipBack, SkipForward, Volume2, Shuffle, Repeat } from 'lucide-react';
+import { Play, Pause, SkipBack, SkipForward, Volume2, Shuffle, Repeat, ListMusic } from 'lucide-react';
 import { usePlayer } from '../../context/PlayerContext';
 
 const BottomPlayer = () => {
-  const { currentTrack, isPlaying, togglePlay, handleNext, handlePrevious, volume, setVolume } = usePlayer();
+  const { currentTrack, isPlaying, togglePlay, handleNext, handlePrevious, volume, setVolume, isQueueOpen, toggleQueue } = usePlayer();
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const audioRef = useRef(null);
@@ -190,8 +190,16 @@ const BottomPlayer = () => {
       </div>
 
       {/* Extra Controls */}
-      <div className="flex items-center justify-end w-1/3 space-x-2 pr-2">
-        <Volume2 className="w-5 h-5 text-gray-400" />
+      <div className="flex items-center justify-end w-1/3 space-x-4 pr-2">
+        <button 
+          onClick={toggleQueue} 
+          className={`transition-colors ${isQueueOpen ? 'text-spotify-green hover:text-green-400' : 'text-gray-400 hover:text-white'}`}
+          title="Toggle Queue"
+        >
+          <ListMusic className="w-5 h-5" />
+        </button>
+        <div className="flex items-center space-x-2">
+          <Volume2 className="w-5 h-5 text-gray-400" />
         <div 
           ref={volumeRef}
           className="w-24 h-1 bg-gray-600 rounded-full group cursor-pointer relative py-2 -my-2 flex items-center"

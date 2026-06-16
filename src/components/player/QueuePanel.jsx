@@ -1,16 +1,19 @@
 import { usePlayer } from '../../context/PlayerContext';
-import { GripVertical } from 'lucide-react';
+import { GripVertical, X } from 'lucide-react';
 import { useState } from 'react';
 
 const QueuePanel = () => {
-  const { queue, currentTrack } = usePlayer();
+  const { queue, currentTrack, isQueueOpen, toggleQueue } = usePlayer();
 
-  if (queue.length === 0 && !currentTrack) return null;
+  if (!isQueueOpen || (queue.length === 0 && !currentTrack)) return null;
 
   return (
     <div className="w-80 bg-[#121212] border-l border-white/10 flex flex-col shrink-0 h-full">
       <div className="p-4 border-b border-white/10 flex justify-between items-center">
         <h2 className="font-bold text-lg">Next in Queue</h2>
+        <button onClick={toggleQueue} className="text-gray-400 hover:text-white transition-colors p-1 rounded-full hover:bg-white/10">
+          <X className="w-5 h-5" />
+        </button>
       </div>
       
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
