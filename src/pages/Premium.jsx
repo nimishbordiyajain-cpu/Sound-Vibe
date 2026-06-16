@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { Check, ShieldCheck } from 'lucide-react';
+import { Check, ShieldCheck, Sparkles } from 'lucide-react';
 import toast from 'react-hot-toast';
 import UpiModal from '../components/payment/UpiModal';
+import { motion } from 'framer-motion';
 
 const Premium = () => {
   const [isYearly, setIsYearly] = useState(false);
@@ -121,51 +122,75 @@ const Premium = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-spotify-base text-white pt-20 pb-12 px-6 overflow-y-auto">
-      <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-extrabold mb-4">Listen without limits.</h1>
-          <p className="text-xl text-gray-400">Choose the Premium plan that's right for you.</p>
+    <div className="min-h-screen bg-[#0a0a0a] text-white pt-20 pb-12 px-6 overflow-y-auto relative">
+      {/* Background Ambient Glows */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-spotify-green/10 blur-[150px] pointer-events-none rounded-full" />
+      <div className="absolute bottom-0 right-0 w-[600px] h-[400px] bg-purple-500/10 blur-[150px] pointer-events-none rounded-full" />
+
+      <div className="max-w-6xl mx-auto relative z-10">
+        <motion.div 
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-center mb-16"
+        >
+          <div className="inline-flex items-center space-x-2 bg-white/5 border border-white/10 px-4 py-2 rounded-full mb-6">
+            <Sparkles className="w-4 h-4 text-spotify-green" />
+            <span className="text-sm font-bold tracking-widest text-gray-300">SOUND-VIBE PREMIUM</span>
+          </div>
+          <h1 className="text-5xl md:text-7xl font-black mb-6 tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-white to-gray-500">
+            Listen without limits.
+          </h1>
+          <p className="text-xl text-gray-400 max-w-2xl mx-auto">Elevate your listening experience with high-fidelity audio, ad-free streaming, and exclusive AI features.</p>
           
-          <div className="mt-8 flex items-center justify-center space-x-4">
-            <span className={`text-sm ${!isYearly ? 'text-white font-bold' : 'text-gray-400'}`}>Monthly</span>
+          <div className="mt-10 flex items-center justify-center space-x-4">
+            <span className={`text-sm transition-colors ${!isYearly ? 'text-white font-bold' : 'text-gray-500'}`}>Monthly</span>
             <button 
               onClick={() => setIsYearly(!isYearly)}
-              className="w-14 h-7 bg-spotify-elevated rounded-full p-1 relative transition-colors duration-300 border border-gray-600"
+              className="w-16 h-8 bg-white/10 rounded-full p-1 relative transition-colors duration-300 border border-white/20 hover:border-spotify-green/50"
             >
-              <div className={`w-5 h-5 bg-spotify-green rounded-full shadow-md transition-transform duration-300 ${isYearly ? 'translate-x-7' : ''}`} />
+              <div className={`w-6 h-6 bg-gradient-to-r from-spotify-green to-emerald-400 rounded-full shadow-lg transition-transform duration-300 ${isYearly ? 'translate-x-8' : ''}`} />
             </button>
-            <span className={`text-sm ${isYearly ? 'text-white font-bold' : 'text-gray-400'}`}>Yearly <span className="text-spotify-green text-xs font-bold ml-1">Save 16%</span></span>
+            <span className={`text-sm transition-colors ${isYearly ? 'text-white font-bold' : 'text-gray-500'}`}>
+              Yearly <span className="bg-spotify-green/20 text-spotify-green px-2 py-0.5 rounded text-xs font-black ml-2 uppercase tracking-wide">Save 16%</span>
+            </span>
           </div>
-        </div>
+        </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-8">
-          {plans.map((plan) => (
-            <div 
+        <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          {plans.map((plan, index) => (
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1, duration: 0.5 }}
+              whileHover={{ scale: 1.02 }}
               key={plan.id} 
-              className={`relative bg-spotify-elevated rounded-2xl p-8 border ${plan.popular ? 'border-spotify-green shadow-[0_0_20px_rgba(30,215,96,0.2)]' : 'border-white/10'}`}
+              className={`relative rounded-3xl p-8 border backdrop-blur-xl ${
+                plan.popular 
+                  ? 'bg-gradient-to-b from-spotify-green/10 to-black/40 border-spotify-green/50 shadow-[0_0_40px_rgba(30,215,96,0.15)]' 
+                  : 'bg-white/5 border-white/10 hover:border-white/20'
+              }`}
             >
               {plan.popular && (
-                <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-spotify-green text-black px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
+                <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gradient-to-r from-spotify-green to-emerald-400 text-black px-6 py-1.5 rounded-full text-xs font-black uppercase tracking-widest shadow-[0_0_15px_rgba(30,215,96,0.5)] z-10">
                   Most Popular
                 </div>
               )}
               
-              <h3 className="text-2xl font-bold mb-2">{plan.name}</h3>
-              <div className="mb-6">
-                <span className="text-4xl font-extrabold">₹{plan.price}</span>
-                <span className="text-gray-400">/{isYearly ? 'year' : 'month'}</span>
+              <h3 className="text-2xl font-black mb-2 tracking-tight">{plan.name}</h3>
+              <div className="mb-8">
+                <span className="text-5xl font-black tracking-tighter">₹{plan.price}</span>
+                <span className="text-gray-400 font-medium">/{isYearly ? 'year' : 'month'}</span>
               </div>
 
               <button 
                 disabled={plan.isCurrent}
                 onClick={() => handlePayment(plan)}
-                className={`w-full py-3 rounded-full font-bold mb-3 transition-colors ${
+                className={`w-full py-4 rounded-full font-black tracking-wide mb-3 transition-all ${
                   plan.isCurrent 
-                    ? 'bg-white/10 text-white cursor-not-allowed mb-8' 
+                    ? 'bg-white/5 text-gray-500 cursor-not-allowed mb-8' 
                     : plan.popular
-                      ? 'bg-spotify-green text-black hover:bg-spotify-greenHover'
-                      : 'bg-white text-black hover:bg-gray-200'
+                      ? 'bg-spotify-green text-black hover:bg-emerald-400 hover:shadow-[0_0_20px_rgba(30,215,96,0.4)] hover:scale-[1.02]'
+                      : 'bg-white text-black hover:bg-gray-200 hover:scale-[1.02]'
                 }`}
               >
                 {plan.isCurrent ? 'Current Plan' : 'Pay via Razorpay'}
@@ -174,36 +199,44 @@ const Premium = () => {
               {!plan.isCurrent && plan.price > 0 && (
                 <button 
                   onClick={() => handleNativeUpiPayment(plan)}
-                  className="w-full py-2.5 rounded-full font-bold mb-8 transition-all border border-purple-500 text-purple-400 hover:bg-purple-500 hover:text-white"
+                  className="w-full py-3 rounded-full font-bold mb-8 transition-all border border-purple-500/50 text-purple-400 hover:bg-purple-500 hover:text-white hover:border-purple-500 hover:shadow-[0_0_15px_rgba(168,85,247,0.4)]"
                 >
                   Scan QR & Pay via UPI
                 </button>
               )}
 
-              <div className="space-y-4 border-t border-white/10 pt-6">
+              <div className="space-y-5 border-t border-white/10 pt-8">
                 {plan.features.map((feature, i) => (
-                  <div key={i} className="flex items-start space-x-3 text-sm text-gray-300">
-                    <Check className="w-5 h-5 text-spotify-green shrink-0" />
-                    <span>{feature}</span>
+                  <div key={i} className="flex items-start space-x-4 text-sm text-gray-300">
+                    <Check className="w-5 h-5 text-spotify-green shrink-0 drop-shadow-[0_0_5px_rgba(30,215,96,0.5)]" />
+                    <span className="font-medium">{feature}</span>
                   </div>
                 ))}
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
 
-        <div className="mt-16 bg-[#1a1a1a] rounded-xl p-8 flex flex-col md:flex-row items-center justify-between border border-white/5">
-          <div className="mb-4 md:mb-0">
-            <h4 className="text-xl font-bold mb-2 flex items-center"><ShieldCheck className="w-6 h-6 mr-2 text-spotify-green" /> Secure Payment</h4>
-            <p className="text-sm text-gray-400">Your transactions are encrypted and processed securely via Sound-Vibe Checkout.</p>
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5 }}
+          className="mt-20 max-w-4xl mx-auto bg-gradient-to-r from-white/5 to-transparent rounded-3xl p-8 flex flex-col md:flex-row items-center justify-between border border-white/5 backdrop-blur-sm"
+        >
+          <div className="mb-6 md:mb-0">
+            <h4 className="text-xl font-bold mb-2 flex items-center tracking-tight">
+              <ShieldCheck className="w-6 h-6 mr-3 text-spotify-green" /> 
+              Enterprise-Grade Security
+            </h4>
+            <p className="text-sm text-gray-400 max-w-md">Your transactions are fully encrypted and processed securely via Sound-Vibe Checkout architecture.</p>
           </div>
-          <div className="flex space-x-4 opacity-70">
+          <div className="flex space-x-3 opacity-60">
             {/* Payment method badges */}
-            <div className="px-3 py-1 bg-gray-800 border border-gray-700 rounded font-bold text-sm flex items-center text-white">UPI</div>
-            <div className="px-3 py-1 bg-gray-800 border border-gray-700 rounded font-bold text-sm flex items-center text-white">Cards</div>
-            <div className="px-3 py-1 bg-gray-800 border border-gray-700 rounded font-bold text-sm flex items-center text-white">NetBanking</div>
+            <div className="px-4 py-2 bg-black border border-white/10 rounded-xl font-bold text-xs tracking-wider uppercase flex items-center text-white">UPI</div>
+            <div className="px-4 py-2 bg-black border border-white/10 rounded-xl font-bold text-xs tracking-wider uppercase flex items-center text-white">Cards</div>
+            <div className="px-4 py-2 bg-black border border-white/10 rounded-xl font-bold text-xs tracking-wider uppercase flex items-center text-white">NetBanking</div>
           </div>
-        </div>
+        </motion.div>
       </div>
       <UpiModal 
         isOpen={isUpiModalOpen} 
