@@ -17,8 +17,8 @@ const Landing = () => {
             animate={{ opacity: 1, x: 0 }}
             className="flex items-center space-x-3 group cursor-pointer"
           >
-            <div className="w-12 h-12 bg-gradient-to-br from-spotify-green to-indigo-600 rounded-xl flex items-center justify-center shadow-[0_0_20px_rgba(139,92,246,0.4)] group-hover:shadow-[0_0_30px_rgba(139,92,246,0.6)] transition-all transform group-hover:rotate-6">
-              <Headphones className="w-6 h-6 text-white" />
+            <div className="w-12 h-12 rounded-xl flex items-center justify-center shadow-[0_0_20px_rgba(139,92,246,0.4)] group-hover:shadow-[0_0_30px_rgba(139,92,246,0.6)] transition-all transform group-hover:rotate-6 overflow-hidden">
+              <img src="/logo.png" alt="Sound-Vibe Logo" className="w-full h-full object-cover" />
             </div>
             <span className="text-3xl font-black text-white tracking-tighter bg-clip-text bg-gradient-to-r from-white to-gray-400">Sound-Vibe</span>
           </motion.div>
