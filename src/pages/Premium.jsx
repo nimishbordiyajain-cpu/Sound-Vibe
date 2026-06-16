@@ -48,6 +48,30 @@ const Premium = () => {
       },
       theme: {
         color: '#8B5CF6' // Purple theme matching our app
+      },
+      config: {
+        display: {
+          blocks: {
+            upi: {
+              name: "Pay via UPI",
+              instruments: [
+                { method: "upi" }
+              ]
+            },
+            other: {
+              name: "Other Payment Modes",
+              instruments: [
+                { method: "card" },
+                { method: "netbanking" },
+                { method: "wallet" }
+              ]
+            }
+          },
+          sequence: ["block.upi", "block.other"],
+          preferences: {
+            show_default_blocks: false
+          }
+        }
       }
     };
 
@@ -148,11 +172,11 @@ const Premium = () => {
             <h4 className="text-xl font-bold mb-2 flex items-center"><ShieldCheck className="w-6 h-6 mr-2 text-spotify-green" /> Secure Payment</h4>
             <p className="text-sm text-gray-400">Your transactions are encrypted and processed securely via Sound-Vibe Checkout.</p>
           </div>
-          <div className="flex space-x-4 grayscale opacity-70">
-            {/* Payment method icons placeholders */}
-            <div className="w-12 h-8 bg-gray-800 rounded"></div>
-            <div className="w-12 h-8 bg-gray-800 rounded"></div>
-            <div className="w-12 h-8 bg-gray-800 rounded"></div>
+          <div className="flex space-x-4 opacity-70">
+            {/* Payment method badges */}
+            <div className="px-3 py-1 bg-gray-800 border border-gray-700 rounded font-bold text-sm flex items-center text-white">UPI</div>
+            <div className="px-3 py-1 bg-gray-800 border border-gray-700 rounded font-bold text-sm flex items-center text-white">Cards</div>
+            <div className="px-3 py-1 bg-gray-800 border border-gray-700 rounded font-bold text-sm flex items-center text-white">NetBanking</div>
           </div>
         </div>
       </div>
