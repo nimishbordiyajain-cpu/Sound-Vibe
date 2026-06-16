@@ -76,7 +76,7 @@ export const PlayerProvider = ({ children }) => {
   };
 
   const addToQueue = (track) => {
-    setQueue([...queue, track]);
+    setQueue(prevQueue => [...prevQueue, track]);
   };
 
   const shuffleQueue = () => {
