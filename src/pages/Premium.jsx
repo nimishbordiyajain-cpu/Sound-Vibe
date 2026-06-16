@@ -3,9 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { Check, ShieldCheck } from 'lucide-react';
 import toast from 'react-hot-toast';
+import UpiModal from '../components/payment/UpiModal';
 
 const Premium = () => {
   const [isYearly, setIsYearly] = useState(false);
+  const [isUpiModalOpen, setIsUpiModalOpen] = useState(false);
+  const [selectedUpiPlan, setSelectedUpiPlan] = useState(null);
   const { user, upgradeToPremium } = useAuth();
   const navigate = useNavigate();
 
@@ -79,6 +82,19 @@ const Premium = () => {
     paymentObject.open();
   };
 
+  const handleNativeUpiPayment = (plan) => {
+    if (plan.price === 0) return;
+    setSelectedUpiPlan(plan);
+    setIsUpiModalOpen(true);
+  };
+
+  const handleUpiSuccess = () => {
+    setIsUpiModalOpen(false);
+    upgradeToPremium();
+    toast.success('UPI Payment Successful!');
+    navigate('/receipt', { state: { plan: selectedUpiPlan, method: 'upi', date: new Date().toISOString(), paymentId: 'upi_' + Date.now() } });
+  };
+
   const plans = [
     {
       id: 'free',
@@ -144,16 +160,25 @@ const Premium = () => {
               <button 
                 disabled={plan.isCurrent}
                 onClick={() => handlePayment(plan)}
-                className={`w-full py-3 rounded-full font-bold mb-8 transition-colors ${
+                className={`w-full py-3 rounded-full font-bold mb-3 transition-colors ${
                   plan.isCurrent 
-                    ? 'bg-white/10 text-white cursor-not-allowed' 
+                    ? 'bg-white/10 text-white cursor-not-allowed mb-8' 
                     : plan.popular
                       ? 'bg-spotify-green text-black hover:bg-spotify-greenHover'
                       : 'bg-white text-black hover:bg-gray-200'
                 }`}
               >
-                {plan.isCurrent ? 'Current Plan' : 'Get Started'}
+                {plan.isCurrent ? 'Current Plan' : 'Pay via Razorpay'}
               </button>
+
+              {!plan.isCurrent && plan.price > 0 && (
+                <button 
+                  onClick={() => handleNativeUpiPayment(plan)}
+                  className="w-full py-2.5 rounded-full font-bold mb-8 transition-all border border-purple-500 text-purple-400 hover:bg-purple-500 hover:text-white"
+                >
+                  Scan QR & Pay via UPI
+                </button>
+              )}
 
               <div className="space-y-4 border-t border-white/10 pt-6">
                 {plan.features.map((feature, i) => (
@@ -180,6 +205,12 @@ const Premium = () => {
           </div>
         </div>
       </div>
+      <UpiModal 
+        isOpen={isUpiModalOpen} 
+        onClose={() => setIsUpiModalOpen(false)} 
+        plan={selectedUpiPlan} 
+        onSuccess={handleUpiSuccess} 
+      />
     </div>
   );
 };
