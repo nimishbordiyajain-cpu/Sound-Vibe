@@ -43,18 +43,18 @@ const Landing = () => {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="lg:w-1/2 text-left"
         >
-          <div className="inline-flex items-center px-4 py-2 rounded-full bg-white/5 border border-white/10 text-spotify-green text-sm font-semibold mb-8 backdrop-blur-md">
+          <div className="inline-flex items-center px-4 py-2 rounded-full bg-white/5 border border-white/10 text-purple-400 text-sm font-semibold mb-8 backdrop-blur-md">
             <Star className="w-4 h-4 mr-2 fill-current" /> Premium Audio Experience
           </div>
           <h1 className="text-6xl md:text-8xl font-black text-white mb-6 leading-tight tracking-tighter">
             Feel the <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-spotify-green via-purple-400 to-indigo-400">music.</span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-indigo-400">music.</span>
           </h1>
           <p className="text-xl md:text-2xl text-gray-400 mb-10 max-w-xl font-light leading-relaxed">
             Immerse yourself in millions of songs and podcasts. High-fidelity audio with a seamless, lag-free premium interface.
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
-            <Link to="/register" className="bg-spotify-green text-white px-10 py-5 rounded-full font-extrabold text-lg hover:scale-105 transition-transform shadow-[0_0_40px_rgba(139,92,246,0.5)] flex items-center justify-center">
+            <Link to="/register" className="bg-gradient-to-r from-purple-500 to-indigo-500 text-white px-10 py-5 rounded-full font-extrabold text-lg hover:scale-105 transition-transform shadow-[0_0_40px_rgba(139,92,246,0.6)] flex items-center justify-center">
               Get Sound-Vibe Free <ChevronRight className="w-6 h-6 ml-2" />
             </Link>
             <Link to="/premium" className="bg-[#242424] text-white border border-white/10 px-10 py-5 rounded-full font-bold text-lg hover:bg-white/10 transition-colors flex items-center justify-center">
@@ -83,10 +83,10 @@ const Landing = () => {
               <div className="absolute top-0 right-0 w-64 h-64 bg-spotify-green/20 rounded-full blur-[80px] -mr-10 -mt-10"></div>
               
               <div className="relative z-10 flex justify-between items-start">
-                <div className="w-16 h-16 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg">
-                  <Music className="w-8 h-8 text-white" />
+                <div className="w-16 h-16 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg overflow-hidden">
+                  <img src="/logo.png" alt="Logo" className="w-12 h-12 object-contain" />
                 </div>
-                <div className="px-4 py-1 bg-white/10 rounded-full text-xs font-bold text-spotify-green border border-white/10">Now Playing</div>
+                <div className="px-4 py-1 bg-white/10 rounded-full text-xs font-bold text-purple-400 border border-white/10">Now Playing</div>
               </div>
               
               <div className="relative z-10">
@@ -100,7 +100,7 @@ const Landing = () => {
                       initial={{ width: 0 }}
                       animate={{ width: "65%" }}
                       transition={{ duration: 2, delay: 1 }}
-                      className="h-full bg-gradient-to-r from-spotify-green to-indigo-400 rounded-full"
+                      className="h-full bg-gradient-to-r from-purple-500 to-indigo-400 rounded-full"
                     />
                   </div>
                 </div>
@@ -119,7 +119,7 @@ const Landing = () => {
           </div>
           <div className="grid md:grid-cols-3 gap-8">
             <FeatureCard 
-              icon={<PlayCircle className="w-12 h-12 text-spotify-green" />}
+              icon={<PlayCircle className="w-12 h-12 text-purple-500" />}
               title="Seamless Playback"
               description="A persistent bottom player ensures your music never stops, even when you navigate to other pages."
               delay={0.1}

@@ -33,10 +33,8 @@ const Login = () => {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-spotify-base via-[#1a1a1a] to-spotify-base p-4">
       <div className="w-full max-w-md bg-spotify-elevated p-8 rounded-2xl shadow-2xl border border-white/5">
         <div className="flex flex-col items-center mb-8">
-          <div className="w-16 h-16 bg-spotify-green rounded-full flex items-center justify-center mb-4 shadow-[0_0_20px_rgba(30,215,96,0.3)]">
-            <Music className="w-8 h-8 text-black" />
-          </div>
-          <h2 className="text-3xl font-bold text-white">Log in to SoundVibe</h2>
+          <img src="/logo.png" alt="Sound-Vibe Logo" className="w-24 h-24 mb-4 object-contain drop-shadow-[0_0_20px_rgba(139,92,246,0.6)]" />
+          <h2 className="text-3xl font-bold text-white">Log in to Sound-Vibe</h2>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -46,7 +44,7 @@ const Login = () => {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-3 bg-spotify-base border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-spotify-green focus:ring-1 focus:ring-spotify-green transition-colors"
+              className="w-full px-4 py-3 bg-spotify-base border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-colors"
               placeholder="name@example.com"
             />
           </div>
@@ -54,13 +52,13 @@ const Login = () => {
           <div>
             <div className="flex items-center justify-between mb-2">
               <label className="block text-sm font-medium text-gray-400">Password</label>
-              <Link to="/forgot-password" className="text-xs text-spotify-green hover:underline">Forgot password?</Link>
+              <Link to="/forgot-password" className="text-xs text-purple-400 hover:text-purple-300 hover:underline transition-colors">Forgot password?</Link>
             </div>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-3 bg-spotify-base border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-spotify-green focus:ring-1 focus:ring-spotify-green transition-colors"
+              className="w-full px-4 py-3 bg-spotify-base border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-colors"
               placeholder="••••••••"
             />
           </div>
@@ -68,7 +66,7 @@ const Login = () => {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full py-3 px-4 bg-spotify-green hover:bg-spotify-greenHover text-black font-bold rounded-full transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center space-x-2 disabled:opacity-70 disabled:cursor-not-allowed"
+            className="w-full py-3 px-4 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold rounded-full transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center space-x-2 disabled:opacity-70 disabled:cursor-not-allowed shadow-[0_0_20px_rgba(139,92,246,0.3)]"
           >
             {isSubmitting ? <Loader2 className="w-5 h-5 animate-spin" /> : (
               <>
@@ -81,8 +79,8 @@ const Login = () => {
 
         <p className="mt-8 text-center text-sm text-gray-400">
           Don't have an account?{' '}
-          <Link to="/register" className="text-white hover:text-spotify-green hover:underline font-medium transition-colors">
-            Sign up for SoundVibe
+          <Link to="/register" className="text-white hover:text-purple-400 hover:underline font-medium transition-colors">
+            Sign up for Sound-Vibe
           </Link>
         </p>
       </div>
