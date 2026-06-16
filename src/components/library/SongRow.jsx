@@ -24,8 +24,10 @@ const SongRow = React.memo(({ track, index, isCurrent, isPlaying, isLiked, playT
   };
 
   return (
-    <div className="flex items-center justify-between p-3 rounded-xl glass-panel-hover border border-transparent group transition-all duration-300 cursor-pointer hover:shadow-lg hover:shadow-purple-500/10 relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-[100%] group-hover:translate-x-[100%] transition-transform duration-1000 ease-in-out pointer-events-none" />
+    <div className="flex items-center justify-between p-3 rounded-xl glass-panel-hover border border-transparent group transition-all duration-300 cursor-pointer hover:shadow-lg hover:shadow-purple-500/10 relative">
+      <div className="absolute inset-0 overflow-hidden rounded-xl pointer-events-none">
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-[100%] group-hover:translate-x-[100%] transition-transform duration-1000 ease-in-out" />
+      </div>
       <div className="flex items-center space-x-4 w-2/5 relative z-10" onClick={handlePlayClick}>
         <div className="w-6 text-right text-gray-400 group-hover:hidden">
           {isCurrent && isPlaying ? (
@@ -107,9 +109,10 @@ const SongRow = React.memo(({ track, index, isCurrent, isPlaying, isLiked, playT
     </div>
   );
 }, (prevProps, nextProps) => {
-  // Timeline Update Shield: only re-render if the track changes play state or liked state
+  // Timeline Update Shield: only re-render if the track changes play state, liked state, or playlists array
   return prevProps.isCurrent === nextProps.isCurrent && 
          prevProps.isLiked === nextProps.isLiked &&
+         prevProps.playlists === nextProps.playlists &&
          (prevProps.isCurrent ? prevProps.isPlaying === nextProps.isPlaying : true);
 });
 
