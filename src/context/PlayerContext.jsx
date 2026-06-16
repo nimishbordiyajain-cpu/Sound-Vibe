@@ -11,8 +11,18 @@ export const PlayerProvider = ({ children }) => {
   const [playlists, setPlaylists] = useState([]);
   const [likedSongs, setLikedSongs] = useState([]);
   const [isQueueOpen, setIsQueueOpen] = useState(true);
+  const [isShuffle, setIsShuffle] = useState(false);
+  const [isRepeat, setIsRepeat] = useState(false);
 
   const toggleQueue = () => setIsQueueOpen(!isQueueOpen);
+  const toggleRepeat = () => setIsRepeat(!isRepeat);
+  const toggleShuffle = () => {
+    setIsShuffle(!isShuffle);
+    if (!isShuffle && queue.length > 0) {
+      const shuffled = [...queue].sort(() => Math.random() - 0.5);
+      setQueue(shuffled);
+    }
+  };
 
   const toggleLike = (track) => {
     setLikedSongs((prev) => {
@@ -79,9 +89,9 @@ export const PlayerProvider = ({ children }) => {
 
   return (
     <PlayerContext.Provider value={{
-      currentTrack, isPlaying, queue, duration, volume, playlists, likedSongs, isQueueOpen,
+      currentTrack, isPlaying, queue, duration, volume, playlists, likedSongs, isQueueOpen, isShuffle, isRepeat,
       playTrack, togglePlay, handleNext, handlePrevious, addToQueue, shuffleQueue,
-      setVolume, createPlaylist, toggleLike, addTrackToPlaylist, toggleQueue
+      setVolume, createPlaylist, toggleLike, addTrackToPlaylist, toggleQueue, toggleShuffle, toggleRepeat
     }}>
       {children}
     </PlayerContext.Provider>

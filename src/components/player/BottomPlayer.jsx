@@ -3,7 +3,7 @@ import { Play, Pause, SkipBack, SkipForward, Volume2, Shuffle, Repeat, ListMusic
 import { usePlayer } from '../../context/PlayerContext';
 
 const BottomPlayer = () => {
-  const { currentTrack, isPlaying, togglePlay, handleNext, handlePrevious, volume, setVolume, isQueueOpen, toggleQueue } = usePlayer();
+  const { currentTrack, isPlaying, togglePlay, handleNext, handlePrevious, volume, setVolume, isQueueOpen, toggleQueue, isShuffle, isRepeat, toggleShuffle, toggleRepeat } = usePlayer();
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const audioRef = useRef(null);
@@ -127,7 +127,14 @@ const BottomPlayer = () => {
         src={currentTrack?.url} 
         onTimeUpdate={handleTimeUpdate}
         onLoadedMetadata={handleLoadedMetadata}
-        onEnded={handleNext}
+        onEnded={() => {
+          if (isRepeat && audioRef.current) {
+            audioRef.current.currentTime = 0;
+            audioRef.current.play();
+          } else {
+            handleNext();
+          }
+        }}
       />
       {/* Track Info */}
       <div className="flex items-center w-1/3">
@@ -147,7 +154,11 @@ const BottomPlayer = () => {
       {/* Controls */}
       <div className="flex flex-col items-center w-1/3 max-w-2xl">
         <div className="flex items-center space-x-6 mb-2">
-          <button className="text-gray-400 hover:text-white transition-colors">
+          <button 
+            onClick={toggleShuffle}
+            className={`transition-all ${isShuffle ? 'text-spotify-green hover:text-green-400 drop-shadow-[0_0_8px_rgba(30,215,96,0.6)]' : 'text-gray-400 hover:text-white'}`}
+            title="Shuffle"
+          >
             <Shuffle className="w-4 h-4" />
           </button>
           <button onClick={onPrevious} className="text-gray-400 hover:text-white transition-colors">
@@ -162,7 +173,11 @@ const BottomPlayer = () => {
           <button onClick={handleNext} className="text-gray-400 hover:text-white transition-colors">
             <SkipForward className="w-5 h-5 fill-current" />
           </button>
-          <button className="text-gray-400 hover:text-white transition-colors">
+          <button 
+            onClick={toggleRepeat}
+            className={`transition-all ${isRepeat ? 'text-spotify-green hover:text-green-400 drop-shadow-[0_0_8px_rgba(30,215,96,0.6)]' : 'text-gray-400 hover:text-white'}`}
+            title="Repeat"
+          >
             <Repeat className="w-4 h-4" />
           </button>
         </div>
